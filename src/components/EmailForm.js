@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 
-const EmailForm = () => {
+const EmailForm = ({ handleOnChange }) => {
+  const [email, setEmail] = useState('')
+  const onChangeHandler = (e) => {
+    setEmail(e.target.value)
+  }
+
+  
+  const validateHandler = (email) => {
+    // console.log(typeof(email))
+    let validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (email.match(validRegex)) {
+      alert('Valid!!!!!!!')
+      return true
+    }
+
+    
+    return "false";
+  }
+  
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="emailInputContainer">
       <h1 className="formTitle">
-        EMAIL{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-800">
-          VALID
-        </span>
+        EMAIL
+        <span className="emailSpan">VALID</span>
         ATION
       </h1>
       <input
         type="text"
         spellCheck={false}
         autoFocus={true}
-        className="w-2/3 py-2 text-xl text-center text-blue-500 bg-transparent border-b-2 border-zinc-500 focus:outline-none focus:border-white"
+        className="emailInput"
+        onChange={onChangeHandler}
       />
+      <button onClick={() => validateHandler(email)} className="text-white">Temporary Button</button>
     </div>
   );
 };

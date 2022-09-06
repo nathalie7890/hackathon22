@@ -15,28 +15,42 @@ const valid = {
 function App() {
   const [email, setEmail] = useState("");
 
+  function validation(input) {
+    let validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (input.match(validRegex)) {
+      return "correct";
+    }
+
+    return "false";
+  }
+
+  function onChangeHandler(e) {
+    setEmail(e.target.value);
+  }
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="mainContainer">
       <motion.nav animate={isOpen ? "open" : "closed"} variants={variants}>
-        <EmailForm />
+        <EmailForm handleOnChange={onChangeHandler(e)} />
 
-        {/* <div className="flex justify-center">
+        <div className="flex justify-center">
           <button
             onClick={() => setIsOpen((isOpen) => !isOpen)}
             className="emailBtn"
           >
             {!isOpen ? "VALIDATE" : "TRY WITH A DIFFERENT EMAIL"}
           </button>
-        </div> */}
+        </div>
       </motion.nav>
-      {/* <div className="validContainer">
+      <div className="validContainer">
         <motion.nav animate={isOpen ? "open" : "closed"} variants={valid}>
           <h1 className="isValid">EMAIL IS VALID!</h1>
           <p className="isValidInfo">Some other data</p>
         </motion.nav>
-      </div> */}
+      </div>
     </div>
   );
 }
