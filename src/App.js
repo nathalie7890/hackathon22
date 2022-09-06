@@ -1,44 +1,65 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import EmailForm from "./components/EmailForm";
+import Swal from "sweetalert2";
 
-const variants = {
-  open: { scale: 0.8, y: "-50%" },
-  closed: { scale: 1 },
-};
+const App = () => {
+  const [isValid, setValid] = useState(false);
 
-const valid = {
-  open: { opacity: 1 },
-  closed: { opacity: 0 },
-};
+  const validateHandler = (email) => {
+    let validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let timerInterval;
+    
+    if (email.match(validRegex)) {
+      setValid(true);
 
-function App() {
-  const [email, setEmail] = useState("");
+      /* Sweet Alert if email is valid */
+      Swal.fire({
+        icon: "success",
+        title: "This email is legit!",
+        timer: 3000,
+        background: "#27272a",
+        color: '#FFFFFF',
+        confirmButtonColor: "#3b82f6",
+        timerProgressBar: true,
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
 
-  const [isOpen, setIsOpen] = useState(false);
+      /* End of Sweet Alert */
+    } else {
+      
+      /* Sweet Alert if email if not valid */
+      Swal.fire({
+        icon: "error",
+        title: "This email looks phishy.",
+        timer: 3000,
+        background: "#27272a",
+        color: '#FFFFFF',
+        confirmButtonColor: "#3b82f6",
+        timerProgressBar: true,
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
+
+      /* End of Sweet Alert */
+    }
+  };
 
   return (
     <div className="mainContainer">
-      <motion.nav animate={isOpen ? "open" : "closed"} variants={variants}>
-        <EmailForm />
-
-        {/* <div className="flex justify-center">
-          <button
-            onClick={() => setIsOpen((isOpen) => !isOpen)}
-            className="emailBtn"
-          >
-            {!isOpen ? "VALIDATE" : "TRY WITH A DIFFERENT EMAIL"}
-          </button>
-        </div> */}
-      </motion.nav>
-      {/* <div className="validContainer">
-        <motion.nav animate={isOpen ? "open" : "closed"} variants={valid}>
-          <h1 className="isValid">EMAIL IS VALID!</h1>
-          <p className="isValidInfo">Some other data</p>
-        </motion.nav>
-      </div> */}
+      <EmailForm validateHandler={validateHandler} />
     </div>
   );
-}
+};
 
 export default App;
