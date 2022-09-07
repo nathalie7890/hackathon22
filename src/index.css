@@ -3,39 +3,44 @@
 @tailwind utilities;
 
 @layer components {
-  .formTitle {
-    @apply text-6xl font-bold tracking-wider text-white mb-36;
-  }
-
   .mainContainer {
     @apply relative flex flex-col items-center justify-center h-screen bg-zinc-900;
   }
 
-  .emailBtn {
-    @apply px-6 py-1 my-8 text-xl border-2 rounded-md text-zinc-400 border-zinc-500 hover:text-white hover:border-white;
+  .formTitle {
+    @apply text-6xl font-bold tracking-wider text-white mb-36;
   }
 
   .validContainer {
-    @apply absolute flex flex-col justify-center align-top top-1/2;
+    @apply flex flex-col -mt-36 -z-10;
   }
 
   .isValid {
     @apply font-semibold text-transparent text-7xl bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text;
   }
-
   .isValidInfo {
     @apply mt-6 text-lg text-center text-zinc-500;
   }
+  /* emailForm Container*/
+  .emailInputContainer {
+    @apply z-50 flex flex-col items-center justify-center w-full;
+  }
+  .emailBtn {
+    @apply px-6 py-1 my-8 text-xl border-2 rounded-md text-zinc-400 border-zinc-500 hover:text-white hover:border-white;
+  }
 
   .emailInput {
-    @apply w-2/3 py-2 text-xl text-center text-blue-500 bg-transparent border-b-2 border-zinc-500 focus:outline-none focus:border-white;
+    @apply w-2/3 py-2 text-xl text-center bg-transparent border-b-2 border-zinc-500 focus:outline-none focus:border-white;
   }
 
   .emailSpan {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-800;
   }
+}
 
-  .emailInputContainer {
-    @apply flex flex-col items-center justify-center w-full;
+@layer utilities {
+  input:-webkit-autofill:active {
+    background-color: blue
+    
   }
 }

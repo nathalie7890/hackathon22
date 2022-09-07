@@ -1,65 +1,37 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import EmailForm from "./components/EmailForm";
-import Swal from "sweetalert2";
 
-const App = () => {
-  const [isValid, setValid] = useState(false);
 
-  const validateHandler = (email) => {
-    let validRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    let timerInterval;
-    
-    if (email.match(validRegex)) {
-      setValid(true);
+const variants = {
+  open: { scale: 0.8, y: "-50%" },
+  closed: { scale: 1 },
+};
 
-      /* Sweet Alert if email is valid */
-      Swal.fire({
-        icon: "success",
-        title: "This email is legit!",
-        timer: 3000,
-        background: "#27272a",
-        color: '#FFFFFF',
-        confirmButtonColor: "#3b82f6",
-        timerProgressBar: true,
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
-      });
+const valid = {
+  open: { opacity: 1 },
+  closed: { opacity: 0 },
+};
 
-      /* End of Sweet Alert */
-    } else {
-      
-      /* Sweet Alert if email if not valid */
-      Swal.fire({
-        icon: "error",
-        title: "This email looks phishy.",
-        timer: 3000,
-        background: "#27272a",
-        color: '#FFFFFF',
-        confirmButtonColor: "#3b82f6",
-        timerProgressBar: true,
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
-      });
+function App() {
 
-      /* End of Sweet Alert */
-    }
-  };
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [isValid, setIsValid] = useState(true)
+console.log(isOpen)
   return (
     <div className="mainContainer">
-      <EmailForm validateHandler={validateHandler} />
+      <motion.nav animate={isOpen ? "open" : "closed"} variants={variants}>
+        <EmailForm isOpen={isOpen} setIsOpen={setIsOpen} setIsValid={setIsValid}/>
+      </motion.nav>
+
+      <div className={`${isOpen ? 'z-0' : ''} validContainer`}>
+        <motion.nav animate={isOpen ? "open" : "closed"} variants={valid} initial={{ opacity: 0 }}>
+          <h1 className={`${isValid ? 'text-emerald-300' : 'text-red-400'} isValid`}>
+            {isValid ? "EMAIL IS VALID" : "EMAIL IS NOT VALID"}</h1>
+        </motion.nav>
+      </div>
     </div>
   );
-};
+}
 
 export default App;
