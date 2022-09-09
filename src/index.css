@@ -12,7 +12,7 @@
   }
 
   .validContainer {
-    @apply flex flex-col -mt-36 -z-10;
+    @apply flex gap-4 text-center -mt-36 -z-10;
   }
 
   .isValid {
@@ -20,6 +20,18 @@
   }
   .isValidInfo {
     @apply mt-6 text-lg text-center text-zinc-500;
+  }
+
+  .isValidText {
+    @apply bg-gradient-to-r from-teal-300 to-emerald-600;
+  }
+
+  .isNotValidText {
+    @apply bg-gradient-to-r from-rose-400 to-red-600;
+  }
+
+  .validInfoContainer {
+    @apply mt-4 text-xl text-zinc-300;
   }
   /* emailForm Container*/
   .emailInputContainer {
@@ -40,7 +52,6 @@
 
 @layer utilities {
   input:-webkit-autofill:active {
-    background-color: blue
-    
+    background-color: blue;
   }
 }
